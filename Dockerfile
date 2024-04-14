@@ -16,6 +16,8 @@ RUN ./gradlew --no-daemon dependencies
 # Copy the application source code
 COPY src /app/src
 
+RUN chmod +x gradlew
+
 # Build the application using Gradle
 RUN ./gradlew --no-daemon build
 
