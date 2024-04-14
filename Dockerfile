@@ -1,5 +1,5 @@
 # Use a base image with Gradle and Java
-FROM gradle:7.4.0-jdk11 AS builder
+FROM gradle:8.6-jdk17 AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -20,7 +20,7 @@ COPY src /app/src
 RUN ./gradlew --no-daemon build
 
 # Create a new stage for the final image
-FROM openjdk:21
+FROM openjdk:17
 
 # Set the working directory inside the container
 WORKDIR /app
