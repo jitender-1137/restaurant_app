@@ -21,10 +21,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "user", indexes = {
-        @Index(name = "by_username", columnList = "username"),
-        @Index(name = "by_username_enabled", columnList = "username, enabled"),
-        @Index(name = "by_user_id_enabled", columnList = "id, enabled")})
+@Table(name = "user_1")
 @Getter
 @Setter
 @NoArgsConstructor

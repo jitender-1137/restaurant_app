@@ -1,11 +1,13 @@
 package com.ms.restaurant.config;
 
+import com.ms.restaurant.filter.CorsLoggingFilter;
 import com.ms.restaurant.filter.JWTAuthenticationFilter;
 import com.ms.restaurant.handler.AccessDeniedHandlerJwt;
 import com.ms.restaurant.handler.JWTAuthenticationEntryPoint;
 import com.ms.restaurant.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -19,7 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +35,7 @@ public class SecurityConfig {
     protected String baseApiPath;
 
     protected final CustomUserDetailsService authService;
+    protected final CorsLoggingFilter corsLoggingFilter;
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -69,5 +71,13 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
+    }
+
+    @Bean
+    public FilterRegistrationBean<CorsLoggingFilter> loggingFilterRegistration() {
+        FilterRegistrationBean<CorsLoggingFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(corsLoggingFilter);
+        registrationBean.addUrlPatterns("/*");
+        return registrationBean;
     }
 }

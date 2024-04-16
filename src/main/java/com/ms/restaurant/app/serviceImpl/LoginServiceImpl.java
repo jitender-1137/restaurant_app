@@ -53,7 +53,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public UserLoginResDto findByUsername(String username) {
         Users user = new Users();
-        username = username.trim().replaceAll("[^\\d]", "").substring(2, 12);
+        username = username.trim().replaceAll("[^\\d]", "");
         Optional<Users> existingUser = userRepo.findByUsernameAndEnabledTrue(username);
         if (existingUser.isEmpty()) {
             user.setUsername(username);
